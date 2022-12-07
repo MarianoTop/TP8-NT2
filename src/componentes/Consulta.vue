@@ -5,19 +5,24 @@
       <hr />
       <hr />
       <br />
-      <div class="table-responsive">
-        <table class="table table-dark">
-          <tr>
-            <th>Nombre</th>
-            <th>email</th>
-            <th>edad</th>
-          </tr>
-          <tr v-for="(dato, index) in datos" :key="index">
-            <td>{{ dato.nombre }}</td>
-            <td>{{ dato.email }}</td>
-            <td>{{ dato.edad }}</td>
-          </tr>
-        </table>
+      <div v-if="mostrarDatos.length> 0">
+        <div class="table-responsive">
+          <table class="table table-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>email</th>
+              <th>edad</th>
+            </tr>
+            <tr v-for="(dato, index) in mostrarDatos" :key="index">
+              <td>{{ dato.nombre }}</td>
+              <td>{{ dato.email }}</td>
+              <td>{{ dato.edad }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div v-else>
+        <h4>No existen usuarios en la base de datos.</h4>
       </div>
     </div>
   </section>
@@ -30,7 +35,7 @@ export default {
   mounted() {
     //this.getPostXHRcb()
     //this.getPostFetch()
-    this.getDatosAxios();
+     this.peticionGet();
   },
   data() {
     return {
@@ -63,9 +68,10 @@ export default {
       }
     },*/
     //async
+   /*
     async getDatosAxios() {
       //Promise 
-      /*
+      
       this.axios(this.url).then( response => {
         let respuesta =response.data
         if(respuesta.length==0){
@@ -73,7 +79,7 @@ export default {
         }
         this.datos = respuesta;
       } ).catch(error => console.error(error))
-      */
+     
     // Async
       
       try {
@@ -87,10 +93,21 @@ export default {
       } catch (error) {
         console.error(error);
       }
+
     
     },
+ */
+      peticionGet(){
+      console.warn('dispatch -> peticionGet', new Date().toLocaleString())
+            this.$store.dispatch('getUsuarios')
+      }
   },
-  computed: {},
+  computed: {       
+     mostrarDatos() {
+     let datosStore = this.$store.state.datos
+     console.log('mostrarDatos', datosStore)
+            return datosStore
+        }},
 };
 </script>
 

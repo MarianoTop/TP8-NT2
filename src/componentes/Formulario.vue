@@ -129,17 +129,25 @@ export default {
     },    
         enviar() {
         console.log({...this.formData})
-        this.postProducto()
+        this.postUsuario()
         this.formData = this.getInitialData()
             this.formState._reset()
       },
+      postUsuario(){
+        console.warn('------------------------------------')
+            console.warn('dispatch -> postUsuario', new Date().toLocaleString())
+            this.$store.dispatch('agregarUsuario', this.formData)
+      }
+
+      ,
+      /*
      async postProducto() {
 
-        /*
+       
         this.axios.post(this.url, this.formData, { 'content-type' : 'application/json' })
         .then( response=> console.log(response)
         ).catch(error =>  console.error('ERROR en postProducto', error))
-          */
+          
         
         try {
           console.log("URL: " + this.url)
@@ -153,6 +161,7 @@ export default {
         }
       
       },
+      */
   },
   computed: {},
 };
